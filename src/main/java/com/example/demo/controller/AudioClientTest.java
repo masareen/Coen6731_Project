@@ -68,6 +68,7 @@ public class AudioClientTest {
         @Override
         public void run() {
         	HttpClient client = HttpClientBuilder.create().build();
+        	long start = System.currentTimeMillis();
             for (int i = 0; i < numGetRequests; i++) {
             	HttpGet request = new HttpGet("http://localhost:8080/api/audio");
                 HttpResponse response;
@@ -85,8 +86,10 @@ public class AudioClientTest {
     				e.printStackTrace();
     			}
             	
-            }
-
+            }	
+            long end = System.currentTimeMillis();
+            System.out.println("Total Time for Get Request:" + (end-start) + "milliseconds for " + numGetRequests + " requests.");
+            start = System.currentTimeMillis();
             for (int i = 0; i < numGetRequests; i++) {
             	HttpGet request = new HttpGet("http://localhost:8080/api/audio/Selena");
                 HttpResponse response;
@@ -105,7 +108,10 @@ public class AudioClientTest {
     			}
             	
             }
+            end = System.currentTimeMillis();
+            System.out.println("Total time: " + (end -start)+ " for "+ numGetRequests +" requests. ");
 
+            start  = System.currentTimeMillis();
             for (int i = 0; i < numPostRequests; i++) {
             	
                  HttpPost post = new HttpPost("http://localhost:8080/api/audio");
@@ -121,6 +127,8 @@ public class AudioClientTest {
 					e.printStackTrace();
 				}          
             }
+            end = System.currentTimeMillis();
+            System.out.println("Total time: " + (end -start)+ " for "+ numPostRequests +" requests. ");
      	      
         }
     }
